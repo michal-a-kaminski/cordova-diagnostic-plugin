@@ -60,6 +60,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
+import android.os.PowerManager;
 
 
 import androidx.core.app.ActivityCompat;
@@ -849,6 +850,18 @@ public class Diagnostic extends CordovaPlugin{
         return Settings.Global.getInt(this.cordova.getActivity().getContentResolver(),
                 Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
     }
+
+    
+    public boolean isBatteryOptimizationOff() {
+        Activity activity = instance.cordova.getActivity();
+        PowerManager pm = (PowerManager) activity.getSystemService(POWER_SERVICE);
+        if (pm != null && !pm.isIgnoringBatteryOptimizations(activity.getPackageName())) {
+           return false;
+        } else {
+            return true;
+        }
+    }
+
 
     public JSONObject getDeviceOSVersion() throws Exception{
         JSONObject details = new JSONObject();
