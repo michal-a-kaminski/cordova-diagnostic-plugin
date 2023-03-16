@@ -22,6 +22,7 @@ package cordova.plugins;
  * Imports
  */
 import static android.content.Context.BATTERY_SERVICE;
+import static android.content.Context.POWER_SERVICE;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -290,6 +291,8 @@ public class Diagnostic extends CordovaPlugin{
                 callbackContext.success(getCurrentBatteryLevel());
             } else if(action.equals("isAirplaneModeEnabled")) {
                 callbackContext.success(isAirplaneModeEnabled() ? 1 : 0);
+            } else if(action.equals("isBatteryOptimizationOff")) {
+              callbackContext.success(isBatteryOptimizationOff() ? 1 : 0);
             } else if(action.equals("getDeviceOSVersion")) {
                 callbackContext.success(getDeviceOSVersion());
             } else if(action.equals("getBuildOSVersion")) {
@@ -851,15 +854,17 @@ public class Diagnostic extends CordovaPlugin{
                 Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
     }
 
-    
     public boolean isBatteryOptimizationOff() {
         Activity activity = instance.cordova.getActivity();
         PowerManager pm = (PowerManager) activity.getSystemService(POWER_SERVICE);
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         if (pm != null && !pm.isIgnoringBatteryOptimizations(activity.getPackageName())) {
            return false;
         } else {
             return true;
         }
+      }
+      return false;
     }
 
 
