@@ -473,6 +473,22 @@ var Diagnostic = (function(){
             []);
     };
 
+        /**
+     * Checks if airplane mode is enabled on device.
+     *
+     * @param {Function} successCallback -  The callback which will be called when the operation is successful.
+     * This callback function is passed a single boolean parameter which is TRUE if airplane mode is enabled.
+     * @param {Function} errorCallback -  The callback which will be called when the operation encounters an error.
+     *  This callback function is passed a single string parameter containing the error message.
+     */
+        Diagnostic.isBatteryOptimizationOff = function(successCallback, errorCallback) {
+            return cordova.exec(Diagnostic._ensureBoolean(successCallback),
+                errorCallback,
+                'Diagnostic',
+                'isBatteryOptimizationOff',
+                []);
+        };
+
     /**
      * Checks if mobile data is enabled on device.
      *

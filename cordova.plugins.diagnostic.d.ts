@@ -319,6 +319,19 @@ interface Diagnostic {
         errorCallback: (error: string) => void
     ) => void;
 
+        /**
+     * ANDROID ONLY
+     *
+     * Checks if battery optimization is off for app on device.
+     *
+     * @param successCallback
+     * @param errorCallback
+     */
+        isBatteryOptimizationOff?: (
+            successCallback: () => boolean,
+            errorCallback: (error: string) => void
+        ) => void;
+
     /**
      * ANDROID ONLY
      *
